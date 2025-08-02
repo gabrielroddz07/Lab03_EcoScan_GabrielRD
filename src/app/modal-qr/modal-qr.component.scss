@@ -1,0 +1,33 @@
+* {
+  font-family: 'Roboto';
+}
+
+ion-title {
+  color: var(--ion-color-success); 
+  font-weight: bold;               
+  text-align: center;
+  font-size: 35px;     
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+ion-content {
+  align-items: center;  
+  justify-content: center;
+}
+
+ion-button {
+  color: rgb(255, 255, 255);
+}
+
+
+.white-bold-icon {
+  color: var(--ion-color-success);
+  --ion-icon-stroke-width: 60px; 
+  font-size: 40px;               
+}

@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><ion-icon name="leaf-outline"></ion-icon> EcoScan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form #form="ngForm">
+
+    <ion-label class="ion-margin-bottom">Actividad ecológica</ion-label>
+
+    <ion-list>
+      <ion-radio-group [(ngModel)]="actividad" name="actividad" required>
+        <ion-item *ngFor="let act of actividades">
+          <ion-label>{{ act }}</ion-label>
+          <ion-radio slot="end" [value]="act" color="success"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+
+    <ion-note color="danger" *ngIf="form.submitted && !actividad">
+      Selecciona una actividad para continuar
+    </ion-note>
+
+    <ion-item>
+      <ion-label>Latitud</ion-label>
+      <ion-text>{{ latitud }}</ion-text>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Longitud</ion-label>
+      <ion-text>{{ longitud }}</ion-text>
+    </ion-item>
+
+    <div class="ion-text-center">
+      <ion-button
+        class="ion-margin-vertical"
+        fill="clear"
+        shape="round"
+        size="large"
+        (click)="guardar(form)"
+        [disabled]="!form.form.valid"
+      >
+        <ion-icon name="add-circle-outline" class="white-bold-icon"></ion-icon>
+      </ion-button>
+
+      <ion-button
+        class="ion-margin-vertical"
+        fill="clear"
+        shape="round"
+        size="large"
+        color="success"
+        (click)="cancelar()"
+      >
+        <ion-icon name="close-circle-outline" class="white-bold-icon"></ion-icon>
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

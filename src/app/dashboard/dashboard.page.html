@@ -1,0 +1,134 @@
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<ion-tabs>
+
+  <ion-tab tab="ecosan">
+    <div id="ecosan-page">
+      <ion-header id="header" *ngIf="!qr.scan">
+        <ion-toolbar>
+          <ion-title><ion-icon name="leaf-outline"></ion-icon> EcoScan</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content *ngIf="!qr.scan" [fullscreen]="true" class="ion-padding">
+        <div class="container">
+          <ion-card color="light">
+
+            <ion-card-content class="botones-container">
+  <ion-button shape="round" size="large" color="success" (click)="qr.StartScan()">
+    <ion-icon name="qr-code-outline" class="white-bold-icon"></ion-icon>
+  </ion-button>
+
+  <ion-button shape="round" size="large" color="success" (click)="tomarFoto()">
+    <ion-icon name="camera-outline" class="white-bold-icon"></ion-icon>
+  </ion-button>
+
+  <ion-button shape="round" size="large" color="success" (click)="registrarUbicacion()">
+    <ion-icon name="location-outline" class="white-bold-icon"></ion-icon>
+  </ion-button>
+</ion-card-content>
+
+            <ion-accordion-group>
+              <img alt="Silhouette of mountains"
+                src="https://www.windowo.it/data/image/blog/ecosostenibilita-1000x500.jpg" />
+              <ion-accordion value="qr">
+                <ion-item slot="header" color="light">
+                  <ion-label>Escanear código QR</ion-label>
+                </ion-item>
+                <div class="ion-padding" slot="content">
+                  "<ion-icon name="qr-code-outline" style="color: var(--ion-color-success)"></ion-icon>" Escanea un código QR vinculado a productos reciclados o lugares verdes para registrar tu acción
+                  ecológica. 
+                </div>
+              </ion-accordion>
+
+              <ion-accordion value="foto">
+                <ion-item slot="header" color="light">
+                  <ion-label>Tomar fotografía</ion-label>
+                </ion-item>
+                <div class="ion-padding" slot="content">
+                  "<ion-icon name="camera-outline" style="color: var(--ion-color-success)"></ion-icon>" Captura una imagen de una actividad ecológica o material reciclable para documentar tu contribución
+                  ambiental.  
+                </div>
+              </ion-accordion>
+
+              <ion-accordion value="ubicacion">
+                <ion-item slot="header" color="light">
+                  <ion-label>Registrar ubicación</ion-label>
+                </ion-item>
+                <div class="ion-padding" slot="content">
+                  "<ion-icon name="location-outline" style="color: var(--ion-color-success)"></ion-icon>" Guarda la ubicación donde realizaste una acción ecológica, como siembra de árboles, limpieza o
+                  reciclaje. 
+                </div>
+              </ion-accordion>
+            </ion-accordion-group>
+
+          </ion-card>
+
+        </div>
+      </ion-content>
+    </div>
+  </ion-tab>
+
+  <ion-tab tab="historial">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title><ion-icon name="leaf-outline"></ion-icon> EcoScan</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <ion-list *ngIf="registros.length > 0">
+        <ion-item *ngFor="let item of registros">
+          <ion-label>
+
+            <p class="fecha">{{ item.fecha | date:'short' }}</p>
+
+            <h3>
+              <ion-icon [name]="
+              item.tipo === 'foto'
+                ? 'image-outline'
+                : item.tipo === 'ubicacion'
+                ? 'location-outline'
+                : item.tipo === 'qr'
+                ? 'qr-code-outline'
+                : 'help-outline'
+            " color="success" size="large"></ion-icon>
+            </h3>
+
+            <div *ngIf="item.tipo === 'foto' && item.imagen">
+              <img [src]="item.imagen" style="width: 100%; border-radius: 8px; margin-top: 6px;" />
+              <p><strong>Título:</strong> {{ item.titulo }}</p>
+            </div>
+
+            <div *ngIf="item.tipo === 'ubicacion'">
+              <p><strong>Actividad:</strong> {{ item.actividad }}</p>
+              <p><strong>Lat:</strong> {{ item.latitud }} | <strong>Lon:</strong> {{ item.longitud }}</p>
+            </div>
+
+            <div *ngIf="item.tipo === 'qr'">
+              <p><strong>Contenido:</strong> {{ item.contenido }}</p>
+            </div>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-text *ngIf="registros.length === 0">
+        <p class="ion-text-center">No hay registros existentes...</p>
+      </ion-text>
+    </ion-content>
+  </ion-tab>
+
+  <ion-tab-bar *ngIf="!qr.scan" slot="bottom" class="custom-tab-bar">
+    <ion-tab-button tab="ecosan">
+      <ion-icon name="leaf-outline"></ion-icon>
+      <ion-label>EcoScan</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="historial">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <ion-label>Registros</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+
+</ion-tabs>
